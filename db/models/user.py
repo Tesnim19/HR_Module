@@ -3,6 +3,13 @@ from sqlalchemy import Column, Integer, Text, String, Boolean, DateTime, Foreign
 from sqlalchemy.orm import relationship
 
 from db.base_class import Base
+from enum import Enum
+
+class UserStatus(str, Enum):
+    active = "active"
+    inactive = "inactive"
+    suspended = "suspended"
+    pending = "pending"
 
 class User(Base):
   __tablename__ = 'users'
@@ -14,6 +21,6 @@ class User(Base):
   employment_start_date = Column(DateTime)
   created_at = Column(DateTime, default=datetime.utcnow)
   updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-  status = Column(String)
+  status = Column(String, Enum(UserStatus))
   image = Column(String, nullable=True)
   
